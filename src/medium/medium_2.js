@@ -20,9 +20,12 @@ see under the methods section
  * @param {allCarStats.ratioHybrids} ratio of cars that are hybrids
  */
 export const allCarStats = {
-    avgMpg: undefined,
-    allYearStats: undefined,
-    ratioHybrids: undefined,
+  avgMpg: {
+    city: mpg_data.reduce(((previousValue, currentValue) => previousValue + currentValue.city_mpg)) / mpg_data.length,
+    highway: mpg_data.reduce(((previousValue, currentValue) => previousValue + currentValue.highway_mpg)) / mpg_data.length,
+  },
+  allYearStats: getStatistics(mpg_data.map(e => e.year)),
+  ratioHybrids: mpg_data.filter(e => e.hybrid === true).length / mpg_data.length,
 };
 
 
@@ -83,7 +86,39 @@ export const allCarStats = {
  *
  * }
  */
+const hybrids = mpg_data.filter(e => e.hybrid === true);
+const makers = [...new Set(hybrids.map(e => e.make))];
+const makerHybrids = []
+makers.forEach(e => makerHybrids.push({ make: e, hybrids: []}));
+hybrids.forEach(e => {
+  makerHybrids.forEach(m => {
+    if (e.make === m.make) m.hybrids.push(e.id);
+  });
+});
+
+const avgMpgDiv = {}
+const notHybrids = mpg_data.filter(e => e.hybrid === false);
+const cityCallback = (previousValue, currentValue) => previousValue + currentValue.city_mpg;
+const highwayCallback = (previousValue, currentValue) => previousValue + currentValue.highway_mpg;
+mpg_data.map(e => e.year).forEach(e => {
+  let yearHybrids = hybrids.filter(f => f.year === e);
+  let yearNotHybrids = notHybrids.filter(f => f.year === e);
+  avgMpgDiv[e] = {
+    hybrid: {
+      city: yearHybrids.reduce(cityCallback, 0) / yearHybrids.length,
+      highway: yearHybrids.filter(f => f.year === e).reduce(highwayCallback, 0) / yearHybrids.length
+    },
+    notHybrid: {
+      city: yearNotHybrids.reduce(cityCallback, 0) / yearNotHybrids.length,
+      highway: yearNotHybrids.filter(f => f.year === e).reduce(highwayCallback, 0) / yearNotHybrids.length
+    }
+  }
+});
+
 export const moreStats = {
-    makerHybrids: undefined,
-    avgMpgByYearAndHybrid: undefined
+  makerHybrids: makerHybrids,
+  avgMpgByYearAndHybrid: avgMpgDiv
 };
+
+console.log(moreStats.makerHybrids);
+console.log(moreStats.avgMpgByYearAndHybrid);
