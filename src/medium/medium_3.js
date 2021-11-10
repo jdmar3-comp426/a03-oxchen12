@@ -66,5 +66,7 @@ export function searchName(car_data, searchTerm) {
  * @returns {[]} an array of car objects
  */
 export function searchByYear(car_data, years) {
-  return car_data.sort((a, b) => b.year - a.year);
+  return car_data
+    .filter(e => years.includes(e.year))
+    .sort((a, b) => a.year - b.year);
 }
