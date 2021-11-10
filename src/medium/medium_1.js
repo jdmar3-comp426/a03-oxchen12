@@ -26,10 +26,11 @@ export function getSum(array) {
 export function getMedian(array) {
   const sorted = [...array].sort();
   const length = sorted.length;
+  const mid = Math.floor(length / 2);
   if (length % 2 === 0) {
-    return (sorted[length / 2] + sorted[length / 2 - 1]) / 2;
+    return (sorted[mid] + sorted[mid - 1]) / 2;
   }
-  return sorted[Math.floor(length / 2)];
+  return sorted[mid];
 }
 
 /**
