@@ -67,7 +67,7 @@ export function removeKey(object, key) {
  */
 export function removeKeyNonDestructive(object, key) {
   const out = {};
-  for (let k in object.keys()) {
+  for (let k in Object.keys(object)) {
     if (k !== key) out[k] = object[k];
   }
   return out;
