@@ -27,10 +27,7 @@ export function getMedian(array) {
   const sorted = [...array].sort();
   const length = sorted.length;
   const mid = Math.floor(length / 2);
-  if (length % 2 === 0) {
-    return (sorted[mid] + sorted[mid - 1]) / 2;
-  }
-  return sorted[mid];
+  return length % 2 === 0 ? (sorted[mid] + sorted[mid - 1]) / 2 : sorted[mid];
 }
 
 /**
@@ -55,7 +52,7 @@ export function getMedian(array) {
 export function getStatistics(array) {
   const length = array.length;
   const sum = array.reduce(((previousValue, currentValue) => previousValue + currentValue));
-  const mean = length / sum;
+  const mean = sum / length;
   const vari = variance(array, mean);
 
   return {
