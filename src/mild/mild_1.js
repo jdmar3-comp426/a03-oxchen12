@@ -52,6 +52,6 @@ export function maxAndMin(numbers) {
  */
 export function countArray(array) {
   const out = {};
-  array.forEach(e => e in Object.keys(out) ? out[e]++ : out[e] = 0);
+  array.forEach(e => e in Object.keys(out) ? out[e] = out[e] + 1 : out[e] = 0);
   return out;
 }
