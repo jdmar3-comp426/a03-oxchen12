@@ -120,5 +120,5 @@ export const moreStats = {
   avgMpgByYearAndHybrid: avgMpgDiv
 };
 
-console.log(moreStats.makerHybrids);
-console.log(moreStats.avgMpgByYearAndHybrid);
+// console.log(moreStats.makerHybrids);
+// console.log(moreStats.avgMpgByYearAndHybrid);
